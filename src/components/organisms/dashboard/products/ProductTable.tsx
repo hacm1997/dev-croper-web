@@ -32,7 +32,6 @@ export default function ProductTable({
   onDetails,
   onDelete,
 }: ProductTableProps) {
-
   return (
     <div className="card bg-[#18181b] text-[#f4f4f5] border-none">
       <DataTable
@@ -64,6 +63,11 @@ export default function ProductTable({
           header="Description"
           style={{ width: "25%", background: "#18181b", color: "#f4f4f5" }}
           headerStyle={{ background: "#27272a", color: "#f4f4f5" }}
+          body={(rowData) =>
+            rowData.description.length > 50
+              ? `${rowData.description.slice(0, 30)}...`
+              : rowData.description
+          }
         />
         <Column
           field="price"
@@ -87,7 +91,9 @@ export default function ProductTable({
                 <Button
                   rounded
                   text
-                  icon={<MdOutlineRemoveRedEye className="text-gray-400 text-2xl" />}
+                  icon={
+                    <MdOutlineRemoveRedEye className="text-gray-400 text-2xl" />
+                  }
                   onClick={() => onDetails(row._id)}
                   tooltip="Details"
                   tooltipOptions={{ position: "left" }}

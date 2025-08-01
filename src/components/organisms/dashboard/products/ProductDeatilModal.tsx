@@ -1,3 +1,4 @@
+import PrimaryButton from "@/components/atoms/PrimaryButton";
 import Modal from "@/components/molecules/modals/Modal";
 import { useProductById } from "@/hooks/products";
 import { Skeleton } from "primereact/skeleton";
@@ -37,8 +38,8 @@ export default function ProductDeatilModal({
       {loading ? (
         <Skeleton className="py-4 h-[300px] w-[90%]" />
       ) : (
-        <div className="flex flex-col gap-4 border-t w-full">
-          <div className="flex justify-around flex-wrap px-4 md:px-8 py-4 ">
+        <div className="flex flex-col gap-4 border-t w-full px-4 md:px-8 py-4">
+          <div className="flex justify-between flex-wrap">
             <div className="flex gap-3">
               <span>Name: </span>
               <span className="font-bold">{selectedProduct?.name}</span>
@@ -53,6 +54,30 @@ export default function ProductDeatilModal({
                   }).format(selectedProduct.price)}
               </span>
             </div>
+          </div>
+
+          <div className="flex justify-start">
+            <div className="flex flex-col gap-3">
+              <span>Description: </span>
+              <span className="font-bold text-justify">
+                {selectedProduct?.description}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex justify-between flex-wrap">
+            <div className="flex gap-3">
+              <span>Category: </span>
+              <span className="font-bold">{selectedProduct?.category}</span>
+            </div>
+          </div>
+
+          <div className="flex justify-end">
+            <PrimaryButton
+              label="Close"
+              type="button"
+              onAction={() => setModalVisible(false)}
+            />
           </div>
         </div>
       )}

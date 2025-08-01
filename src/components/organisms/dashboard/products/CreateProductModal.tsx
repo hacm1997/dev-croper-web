@@ -11,6 +11,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { InputNumber } from "primereact/inputnumber";
 import PrimaryButton from "@/components/atoms/PrimaryButton";
 import { toast } from "react-toastify";
+import DissmindButton from "@/components/atoms/DissmindButton";
 
 type CreateProductModalProps = {
   modalVisible: boolean;
@@ -96,7 +97,7 @@ export default function CreateProductModal({
       visible={modalVisible}
       setVisible={setModalVisible}
       header={
-        <div className="p-4">{isEdit ? "Edit Product" : "New Product"}</div>
+        <div className="p-4">{isEdit ? "Edit Product" : "Create a new product"}</div>
       }
     >
       <div className="border-t w-full">
@@ -215,6 +216,13 @@ export default function CreateProductModal({
           )}
 
           <div className="flex justify-end gap-3">
+            <DissmindButton
+              label="Cancel"
+              type="button"
+              onAction={() => {
+                setModalVisible(false);
+              }}
+            />
             <PrimaryButton
               label={
                 isEdit

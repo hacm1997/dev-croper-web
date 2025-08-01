@@ -13,7 +13,7 @@ $ npm install
 ## Config and add .env in the root folder (optional if you don't change the url in the service)
 
 ```bash
-$ NEXT_PUBLIC_API_URL=http://localhost:8080/api
+NEXT_PUBLIC_API_URL=http://localhost:8080/api
 ```
 
 ## Project Started
