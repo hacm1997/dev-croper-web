@@ -5,9 +5,10 @@ type Props = {
   type: "button" | "submit" | "reset" | undefined;
   onAction?: () => void;
   loading?: boolean;
+  disabled?: boolean;
 };
 
-export default function PrimaryButton({ label, loading, type, onAction }: Props) {
+export default function PrimaryButton({ label, loading, type, disabled, onAction }: Props) {
   return (
     <Button
       type={type}
@@ -15,6 +16,7 @@ export default function PrimaryButton({ label, loading, type, onAction }: Props)
       label={label}
       onClick={onAction}
       loading={loading}
+      disabled={disabled}
     />
   );
 }

@@ -12,6 +12,9 @@ import { InputNumber } from "primereact/inputnumber";
 import PrimaryButton from "@/components/atoms/PrimaryButton";
 import { toast } from "react-toastify";
 import DissmindButton from "@/components/atoms/DissmindButton";
+import { ProductFormValues, productSchema } from "@/lib/productSchema";
+import { Product } from "@/modules/products/dto/product.dto";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type CreateProductModalProps = {
   modalVisible: boolean;
@@ -19,13 +22,6 @@ type CreateProductModalProps = {
   productId?: string; // Optional, used if editing a product
   setModalVisible: (visible: boolean) => void;
   onProductCreated?: () => void;
-};
-
-type FormValues = {
-  name: string;
-  description: string;
-  price: number;
-  category: string;
 };
 
 export default function CreateProductModal({
@@ -47,8 +43,11 @@ export default function CreateProductModal({
     handleSubmit,
     reset,
     setValue,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>();
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<ProductFormValues>({
+    resolver: zodResolver(productSchema),
+    mode: "onChange",
+  });
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   // Load product data when editing
@@ -62,16 +61,30 @@ export default function CreateProductModal({
   useEffect(() => {
     if (isEdit && selectedProduct && modalVisible) {
       setValue("name", selectedProduct.name);
-      setValue("description", selectedProduct.description);
       setValue("price", selectedProduct.price);
-      setValue("category", selectedProduct.category);
+      setValue("description", selectedProduct.description ?? "");
+      setValue("category", selectedProduct.category ?? "");
     } else if (!isEdit && modalVisible) {
-      reset();
+      reset({
+        name: "",
+        description: "",
+        price: 0,
+        category: "",
+      });
     }
   }, [isEdit, selectedProduct, modalVisible, setValue, reset]);
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (formData: ProductFormValues) => {
     setSubmitError(null);
+
+    // Normalize optional fields
+    const data: Omit<Product, "_id" | "__v"> = {
+      name: formData.name,
+      price: formData.price,
+      description: formData.description ?? "",
+      category: formData.category ?? "",
+    };
+
     try {
       if (isEdit && productId) {
         await updateProduct(productId, data);
@@ -97,7 +110,9 @@ export default function CreateProductModal({
       visible={modalVisible}
       setVisible={setModalVisible}
       header={
-        <div className="p-4">{isEdit ? "Edit Product" : "Create a new product"}</div>
+        <div className="p-4">
+          {isEdit ? "Edit Product" : "Create a new product"}
+        </div>
       }
     >
       <div className="border-t w-full">
@@ -118,7 +133,7 @@ export default function CreateProductModal({
                   value={field.value ?? ""}
                   className={
                     errors.name
-                      ? "p-invalid w-full"
+                      ? "p-invalid w-full border rounded-[8px] h-10 px-2"
                       : "w-full border rounded-[8px] h-10 px-2"
                   }
                 />
@@ -170,13 +185,14 @@ export default function CreateProductModal({
                   onValueChange={(e) => field.onChange(e.value)}
                   className={
                     errors.price
-                      ? "p-invalid w-full"
+                      ? "p-invalid w-full border rounded-[8px] h-10 px-2"
                       : "w-full border rounded-[8px] h-10 px-2"
                   }
                   mode="currency"
                   currency="USD"
                   locale="en-US"
                   min={0}
+                  required
                 />
               )}
             />
@@ -235,6 +251,7 @@ export default function CreateProductModal({
               }
               type="submit"
               loading={isSubmitting || loadingProduct}
+              disabled={!isValid}
             />
           </div>
         </form>
