@@ -10,7 +10,7 @@ This project is a CRUD application for managing products.
 $ npm install
 ```
 
-## Config and add .env in the root folder (optional if you not change the url in the service)
+## Config and add .env in the root folder (optional if you don't change the url in the service)
 
 ```bash
 $ NEXT_PUBLIC_API_URL=http://localhost:8080/api
