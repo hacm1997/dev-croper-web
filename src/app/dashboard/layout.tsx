@@ -10,7 +10,9 @@ export default function RootLayout({
   useSessionVerify();
   return (
     <MainLayout>
-      {children}
+      <div className='pl-[20px] md:pl-[300px] flex flex-col gap-10 pt-[50px] w-[94%] h-auto'>
+        {children}
+      </div>
     </MainLayout>
   );
 }

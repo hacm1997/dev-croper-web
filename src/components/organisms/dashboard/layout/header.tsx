@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { FaBars, FaRegUser } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
 
@@ -20,12 +19,7 @@ export const HeaderMenu = ({ toggleMenu }: Props) => {
           </button>
 
           <div className="ml-1 p-2">
-            <Image
-              src="/icons/bank-logo.png"
-              alt="logo"
-              width={50}
-              height={50}
-            />
+            <span className="font-bold text-4xl">Products Croper Dev</span>
           </div>
 
           <div className="space-x-4">

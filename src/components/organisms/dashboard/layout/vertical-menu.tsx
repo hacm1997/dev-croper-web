@@ -1,13 +1,9 @@
 import Link from "next/link";
 import { MdLogout } from "react-icons/md";
-import { FaCheckCircle } from "react-icons/fa";
-import { AiFillBank } from "react-icons/ai";
-// import { Logout } from "@/libs/shared/api/auth";
+import { FaCheckCircle, FaList } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
-// import { useAuth } from "@/libs/context/auth";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { logoutThunk } from "@/modules/auth/thunks/logoutThunk";
-// import { toast } from "react-toastify";
 
 interface Props {
   isMenuOpen: boolean;
@@ -17,7 +13,6 @@ export const VerticalMenu = ({ isMenuOpen }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const email = useAppSelector((state) => state.auth.email);
-  //   const { user } = useAuth();
 
   const handlerLogout = async () => {
     await dispatch(logoutThunk());
@@ -57,7 +52,7 @@ export const VerticalMenu = ({ isMenuOpen }: Props) => {
                             : "text-gray-500 hover:bg-gray-800"
                         }`}
         >
-          <AiFillBank className="text-[#E4E4E7] text-[20px]" />
+          <FaList className="text-[#E4E4E7] text-[20px]" />
           <span className="-mr-1 font-medium">Products</span>
         </Link>
 
