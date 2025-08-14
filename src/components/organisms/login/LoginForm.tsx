@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { loginThunk } from "@/modules/auth/thunks/loginThunk";
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -21,12 +21,10 @@ export const LoginForm = () => {
   };
 
   // Redirige si el login fue exitoso (no hay error, no está cargando y se intentó enviar)
-  useEffect(() => {
-    if (submitted && !loading && !error) {
-      console.log("entry to redirect");
-      router.push("/dashboard");
-    }
-  }, [error, loading, router, submitted]);
+  if (submitted && !loading && !error) {
+    router.push("/dashboard");
+    return null;
+  }
 
   return (
     <>
