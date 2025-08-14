@@ -5,6 +5,7 @@ const protectedRoutes = ["/dashboard"];
 
 export function middleware(request: NextRequest) {
   const rawCookie = request.cookies.get("auth_token")?.value;
+  console.log("cookies => ", request.cookies);
 
   let token: string | undefined;
   if (rawCookie) {
