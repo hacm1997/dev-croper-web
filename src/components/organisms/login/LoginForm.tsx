@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { Button } from "primereact/button";
 import Link from "next/link";
 
-
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,7 +57,7 @@ export const LoginForm = () => {
               required
             />
             <div className="flex gap-4 justify-between">
-              <Link href="signup" title="signup" className="w-[44%]">
+              <Link href="sign-up" title="signup" className="w-[44%]">
                 <Button
                   type="button"
                   className="w-[150px] rounded-2xl h-[40px] bg-[#8f8f8f] transition-all duration-150 hover:bg-[#646464]"
